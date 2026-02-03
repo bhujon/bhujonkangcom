@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhujon Kang Architects | 강부존건축</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">ARCHI LAB</div>
+        
+        <button id="menu-btn" onclick="toggleMenu()">
+            <span class="ko">메뉴</span>
+            <span class="en">menu</span>
+        </button>
+        
+        <div class="right-control">
+            <button id="lang-btn" onclick="toggleLanguage()">EN</button>
+        </div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()">
+            <span class="ko">닫기</span>
+            <span class="en">close</span>
+        </button>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html" onclick="toggleMenu()"><span class="ko">홈</span><span class="en">Home</span></a></li>
+                <li><a href="#" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="#" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="#" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+
+        <input type="text" id="search-input" placeholder="검색">
+    </div>
+
+    <section id="home" class="hero-swiper-container">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                
+                <div class="swiper-slide">
+                    <a href="view.html?id=glasshouse" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Slide 1">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">더 글래스 하우스</span><span class="en">The Glass House</span></h3>
+                        <p class="slide-subtitle"><span class="ko">주거 공간 디자인</span><span class="en">Residential Design</span></p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="view.html?id=artcenter" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=800&q=80" alt="Slide 2">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">시티 아트 센터</span><span class="en">City Art Center</span></h3>
+                        <p class="slide-subtitle"><span class="ko">공공 건축</span><span class="en">Public Architecture</span></p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="view.html?id=studio" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" alt="Slide 3">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">크리에이티브 스튜디오</span><span class="en">Creative Studio</span></h3>
+                        <p class="slide-subtitle"><span class="ko">업무 공간</span><span class="en">Workspace</span></p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="view.html?id=lab" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="Slide 4">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">콘크리트 랩</span><span class="en">Concrete Lab</span></h3>
+                        <p class="slide-subtitle"><span class="ko">실험적 건축</span><span class="en">Experimental</span></p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="view.html?id=loft" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800&q=80" alt="Slide 5">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">어반 로프트</span><span class="en">Urban Loft</span></h3>
+                        <p class="slide-subtitle"><span class="ko">리노베이션</span><span class="en">Renovation</span></p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="view.html?id=eco" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80" alt="Slide 6">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">에코 파빌리온</span><span class="en">Eco Pavilion</span></h3>
+                        <p class="slide-subtitle"><span class="ko">친환경 건축</span><span class="en">Sustainable</span></p>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="view.html?id=tower" class="img-box">
+                        <img src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=800&q=80" alt="Slide 7">
+                    </a>
+                    <div class="slide-text">
+                        <h3 class="slide-title"><span class="ko">시티 타워</span><span class="en">City Tower</span></h3>
+                        <p class="slide-subtitle"><span class="ko">고층 빌딩</span><span class="en">Skyscraper</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="footer-section">
+        <h2><span class="ko">문의하기</span><span class="en">Contact Us</span></h2>
+        <p><span class="ko">서울시 강남구 테헤란로 123</span><span class="en">123 Teheran-ro, Seoul</span></p>
+        <p>contact@archilab.com</p>
+        <p class="copyright">© 2024 ARCHI LAB.</p>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

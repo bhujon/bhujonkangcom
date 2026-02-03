@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project View | ARCHI LAB</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .sub-content-wrapper { width: 80vw; margin: 0 auto; padding-top: 120px; padding-bottom: 100px; }
+        
+        /* 헤더 텍스트 */
+        .project-header { text-align: left; margin-bottom: 40px; }
+        .project-title { font-family: 'Avenir', 'Nunito Sans', sans-serif; font-size: 100px; color: #000; font-weight: 700; line-height: 1.1; margin-bottom: 10px; }
+        .project-subtitle { font-family: 'Nanum Gothic', sans-serif; font-size: 24px; color: #ccc; font-weight: 400; }
+        
+        /* 슬라이드 컨테이너 */
+        .project-swiper { 
+            width: 100%; 
+            height: 60vh; /* 높이 지정 필수 */
+            position: relative; 
+            background-color: #f4f4f4; /* 이미지가 안 뜰 때 영역 확인용 배경색 */
+        }
+        
+        /* [중요] 슬라이드 높이 100% 강제 지정 */
+        .swiper-slide {
+            width: 100%;
+            height: 100%; 
+        }
+
+        /* 이미지 꽉 채우기 */
+        .swiper-slide img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; /* 공백 제거 */
+        }
+        
+        .swiper-button-next, .swiper-button-prev { color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        
+        .project-meta { display: flex; justify-content: space-between; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        .meta-text { font-family: 'Avenir', 'Nunito Sans', 'Nanum Gothic', sans-serif; font-size: 15px; color: #000; font-weight: 500; }
+        
+        .project-description { margin-top: 100px; margin-left: 20vw; width: 60vw; font-size: 20px; line-height: 1.8; color: #333; text-align: justify; }
+        
+        @media (max-width: 768px) { 
+            .sub-content-wrapper { width: 90vw; } 
+            .project-title { font-size: 50px; } 
+            .project-description { margin-left: 0; width: 100%; } 
+            .project-swiper { height: 40vh; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html">ARCHI LAB</a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">menu</span></button>
+        <div class="right-control"><button id="lang-btn" onclick="toggleLanguage()">EN</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="index.html" onclick="toggleMenu()"><span class="ko">홈</span><span class="en">Home</span></a></li>
+                <li><a href="#" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search-input" placeholder="검색">
+    </div>
+
+    <main class="sub-content-wrapper">
+        <div class="project-header">
+            <h1 class="project-title" id="p-title">Loading...</h1>
+            <p class="project-subtitle" id="p-subtitle"></p>
+        </div>
+
+        <div class="swiper projectSwiper">
+            <div class="swiper-wrapper" id="p-slider-wrapper"></div>
+            
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        <div class="project-meta">
+            <span class="meta-text" id="p-year"></span>
+            <span class="meta-text" id="p-location"></span>
+        </div>
+
+        <div class="project-description">
+            <p id="p-desc"></p>
+        </div>
+    </main>
+
+    <section id="contact" class="footer-section">
+        <h2><span class="ko">문의하기</span><span class="en">Contact Us</span></h2>
+        <p>contact@archilab.com</p>
+        <p class="copyright">© 2024 ARCHI LAB.</p>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+
+    <script>
+        // 1. URL 파라미터 확인
+        const params = new URLSearchParams(window.location.search);
+        const projectId = params.get('id'); 
+        
+        // 2. 데이터 가져오기
+        const data = projectData[projectId];
+
+        if (data) {
+            // 텍스트 데이터 주입
+            document.getElementById('p-title').innerText = data.title;
+            document.getElementById('p-subtitle').innerText = data.subtitle;
+            document.getElementById('p-year').innerText = data.year;
+            document.getElementById('p-location').innerText = data.location;
+
+            // 설명 주입
+            const descContainer = document.getElementById('p-desc');
+            descContainer.innerHTML = `
+                <span class="ko">${data.desc.ko}</span>
+                <span class="en">${data.desc.en}</span>
+            `;
+
+            // 3. [중요] 이미지 슬라이드 동적 생성
+            const sliderWrapper = document.getElementById('p-slider-wrapper');
+            
+            // 기존 내용 초기화 (중복 방지)
+            sliderWrapper.innerHTML = '';
+
+            data.images.forEach(imgUrl => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'swiper-slide';
+                // 이미지 태그 생성
+                slideDiv.innerHTML = `<img src="${imgUrl}" alt="Project Image">`;
+                sliderWrapper.appendChild(slideDiv);
+            });
+
+            // 4. [핵심] Swiper 초기화 (observer 옵션 필수)
+            var projectSwiper = new Swiper(".projectSwiper", {
+                // 동적 변경 감지 옵션 (이미지 안 뜨는 문제 해결의 핵심)
+                observer: true,
+                observeParents: true,
+                
+                spaceBetween: 0,
+                centeredSlides: true,
+                autoplay: { delay: 3000, disableOnInteraction: false },
+                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                loop: true,
+                speed: 1000,
+            });
+
+            // 언어 설정 초기화
+            if (document.body.classList.contains('eng-mode')) {
+                // CSS가 처리하므로 추가 작업 불필요
+            }
+
+        } else {
+            // 데이터 없을 때
+            document.querySelector('.sub-content-wrapper').innerHTML = "<h1 style='text-align:center; margin-top:100px;'>Project Not Found</h1><p style='text-align:center;'>URL을 확인해주세요.</p>";
+        }
+    </script>
+</body>
+</html>
