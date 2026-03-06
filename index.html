@@ -1,138 +1,266 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bhujon Kang Architects | 강부존건축</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
     
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .awarded-section {
+            width: 100%;
+            margin-top: 50px; /* Design Principles와 동일한 상단 간격 */
+            margin-bottom: 80px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+    </style>
 </head>
 <body>
+    background-color: #ffffff;
 
     <header>
-        <div class="logo">ARCHI LAB</div>
-        
-        <button id="menu-btn" onclick="toggleMenu()">
-            <span class="ko">메뉴</span>
-            <span class="en">menu</span>
-        </button>
-        
-        <div class="right-control">
-            <button id="lang-btn" onclick="toggleLanguage()">EN</button>
-        </div>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
     </header>
 
     <div id="fullscreen-menu" class="menu-overlay">
-        <button class="close-btn" onclick="toggleMenu()">
-            <span class="ko">닫기</span>
-            <span class="en">close</span>
-        </button>
-        
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
         <nav>
             <ul>
-                <li><a href="index.html" onclick="toggleMenu()"><span class="ko">홈</span><span class="en">Home</span></a></li>
-                <li><a href="#" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
-                <li><a href="#" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
-                <li><a href="#" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
             </ul>
         </nav>
-
-        <input type="text" id="search-input" placeholder="검색">
+        <input type="text" id="search-input" placeholder="Search" onkeyup="handleMenuSearch()">
+        <div id="menu-search-results"></div>
     </div>
 
-    <section id="home" class="hero-swiper-container">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                
-                <div class="swiper-slide">
-                    <a href="view.html?id=glasshouse" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Slide 1">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">더 글래스 하우스</span><span class="en">The Glass House</span></h3>
-                        <p class="slide-subtitle"><span class="ko">주거 공간 디자인</span><span class="en">Residential Design</span></p>
-                    </div>
-                </div>
+    <section id="home-desktop" class="hero-swiper-container desktop-only">
+        <h2 class="selected-project-title">
+            <span class="ko">
+                강부존건축사사무소는<br>
+                최신 건축기술을 예술적 영역으로 접목시켜,<br>
+                최고의 건축디자인을 지향합니다.
+            </span>
+            <span class="en">
+                Bhujon Kang Architects pursues<br>
+                the best design solutions by incorporating<br>
+                the advanced technology into the artistic realm.
+            </span>
+        </h2>
+        
+        <div class="swiper mainSwiper">
+            <div class="swiper-wrapper" id="main-slider-wrapper"></div>
+        </div>
 
-                <div class="swiper-slide">
-                    <a href="view.html?id=artcenter" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=800&q=80" alt="Slide 2">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">시티 아트 센터</span><span class="en">City Art Center</span></h3>
-                        <p class="slide-subtitle"><span class="ko">공공 건축</span><span class="en">Public Architecture</span></p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <a href="view.html?id=studio" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" alt="Slide 3">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">크리에이티브 스튜디오</span><span class="en">Creative Studio</span></h3>
-                        <p class="slide-subtitle"><span class="ko">업무 공간</span><span class="en">Workspace</span></p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <a href="view.html?id=lab" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="Slide 4">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">콘크리트 랩</span><span class="en">Concrete Lab</span></h3>
-                        <p class="slide-subtitle"><span class="ko">실험적 건축</span><span class="en">Experimental</span></p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <a href="view.html?id=loft" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800&q=80" alt="Slide 5">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">어반 로프트</span><span class="en">Urban Loft</span></h3>
-                        <p class="slide-subtitle"><span class="ko">리노베이션</span><span class="en">Renovation</span></p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <a href="view.html?id=eco" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80" alt="Slide 6">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">에코 파빌리온</span><span class="en">Eco Pavilion</span></h3>
-                        <p class="slide-subtitle"><span class="ko">친환경 건축</span><span class="en">Sustainable</span></p>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <a href="view.html?id=tower" class="img-box">
-                        <img src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=800&q=80" alt="Slide 7">
-                    </a>
-                    <div class="slide-text">
-                        <h3 class="slide-title"><span class="ko">시티 타워</span><span class="en">City Tower</span></h3>
-                        <p class="slide-subtitle"><span class="ko">고층 빌딩</span><span class="en">Skyscraper</span></p>
-                    </div>
-                </div>
-
+        <div class="design-principles-section">
+            <div class="dp-title-col">
+                <h3 class="dp-title">
+                    <span class="ko">디자인 원칙</span><span class="en">Design Principles</span>
+                </h3>
+            </div>
+            <div class="dp-list-col">
+                <a href="architecture.html" class="dp-item">
+                    <span class="en">Architecture</span><span class="ko">건축설계</span>
+                </a>
+                <a href="interior.html" class="dp-item">
+                    <span class="en">Interior</span><span class="ko">인테리어 설계</span>
+                </a>
+                <a href="visual.html" class="dp-item">
+                    <span class="en">Visual Design</span><span class="ko">시각디자인</span>
+                </a>
             </div>
         </div>
+
+
+        <h3 class="latest-news-title" style="margin-top: 0;">
+            <span class="ko">최신 소식</span><span class="en">Latest News</span>
+        </h3>
+        
+        <div class="swiper newsSwiper" style="margin-bottom: 0;"> <div class="swiper-wrapper" id="news-slider-wrapper"></div>
+        </div>
+        
+
+
+        <div class="awarded-section" data-aos="fade-up">
+            <div class="dp-title-col">
+                <h3 class="dp-title">
+                    <span class="ko">기타 정보</span><span class="en">Information</span>
+                </h3>
+            </div>
+            <div class="dp-list-col">
+                <a href="awarded.html" class="dp-item">
+                    <span class="en">Awarded Projects</span><span class="ko">공공건축 수상작</span>
+                </a>
+                <a href="proposed.html" class="dp-item">
+                    <span class="en">Archive</span><span class="ko">지난 프로젝트</span>
+                </a>
+                <a href="people.html" class="dp-item">
+                    <span class="en">People</span><span class="ko">구성원</span>
+                </a>
+            </div>
+        </div>
+
+
+        <h3 class="latest-news-title" style="margin-top: 0;">
+            <span class="ko">소셜 네트워킹</span><span class="en">Social Networking</span>
+        </h3>
+        
+
+            <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+            <iframe src="https://lightwidget.com/widgets/8cb4e779883b5c45b08eee044a72d186.html" 
+                    scrolling="no" 
+                    allowtransparency="true" 
+                    class="lightwidget-widget" 
+                    style="width:100%; border:0; overflow:hidden;">
+            </iframe>
+
     </section>
+
+    <section id="home-mobile" class="mobile-project-container mobile-only">
+        <h2 class="mobile-title"><span class="ko">주요 프로젝트</span><span class="en">Selected Projects</span></h2>
+        <div id="mobile-list-wrapper"></div>
+    </section>
+
+
+
+
 
     <section id="contact" class="footer-section">
-        <h2><span class="ko">문의하기</span><span class="en">Contact Us</span></h2>
-        <p><span class="ko">서울시 강남구 테헤란로 123</span><span class="en">123 Teheran-ro, Seoul</span></p>
-        <p>contact@archilab.com</p>
-        <p class="copyright">© 2024 ARCHI LAB.</p>
+    <div class="footer-container">
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">(주)강부존건축사사무소</span>
+                <span class="en">Bhujon Kang Architects, Co., Ltd.</span>
+            </h4>
+            <p>
+                <span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span>
+                <span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span>
+            </p>
+            <p>
+                <strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a>
+            </p>
+        </div>
+
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">Bhujon Kang Architects, PLLC, USA</span>
+                <span class="en">Bhujon Kang Architects, PLLC</span>
+            </h4>
+            <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+            <p>
+                <strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer-common">
+        <div class="footer-contact-links">
+            <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;">
+                <a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a>
+            </p>
+            <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+        </div>
+        <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+    </div>
     </section>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true, offset: 100 });</script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
+    <script src="data.js"></script> 
     <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrapper = document.getElementById('main-slider-wrapper');
+            const mobileWrapper = document.getElementById('mobile-list-wrapper');
+            const newsWrapper = document.getElementById('news-slider-wrapper');
+            
+            if (typeof projectData !== 'undefined') {
+                const selectedProjects = Object.keys(projectData)
+                    .map(key => ({ id: key, ...projectData[key] }))
+                    .filter(p => p.select === true);
+
+                if (wrapper) {
+                    selectedProjects.forEach(p => {
+                        const slide = document.createElement('div');
+                        slide.className = 'swiper-slide';
+                        slide.innerHTML = `
+                            <a href="view.html?id=${p.id}" class="img-box"><img src="${p.images[0]}" alt="${p.title.en}"></a>
+                            <div class="slide-text" data-aos="fade-up" data-aos-delay="200">
+                                <h3 class="slide-title"><span class="ko">${p.title.ko}</span><span class="en">${p.title.en}</span></h3>
+                                <p class="slide-subtitle"><span class="ko">${p.subtitle.ko}</span><span class="en">${p.subtitle.en}</span></p>
+                            </div>
+                        `;
+                        wrapper.appendChild(slide);
+                    });
+                }
+
+                if (mobileWrapper) {
+                    selectedProjects.forEach((p, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'mobile-project-item';
+                        item.setAttribute('data-aos', 'fade-up');
+                        item.setAttribute('data-aos-delay', index * 100);
+                        item.innerHTML = `
+                            <a href="view.html?id=${p.id}">
+                                <div style="overflow:hidden; margin-bottom:15px;"><img src="${p.images[0]}" alt="${p.title.en}"></div>
+                                <div class="m-info">
+                                    <h3><span class="ko">${p.title.ko}</span><span class="en">${p.title.en}</span></h3>
+                                    <p><span class="ko">${p.subtitle.ko}</span><span class="en">${p.subtitle.en}</span></p>
+                                </div>
+                            </a>
+                        `;
+                        mobileWrapper.appendChild(item);
+                    });
+                }
+            }
+
+            if (newsWrapper && typeof newsData !== 'undefined') {
+                const newsList = Object.keys(newsData).map(key => ({ id: key, ...newsData[key] }));
+                newsList.forEach(n => {
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+                    slide.innerHTML = `
+                        <a href="view_news.html?id=${n.id}" class="img-box"><img src="${n.image}" alt="${n.title.en}"></a>
+                        <div class="slide-text" data-aos="fade-up" data-aos-delay="100">
+                            <h3 class="slide-title"><span class="ko">${n.title.ko}</span><span class="en">${n.title.en}</span></h3>
+                            <p class="slide-subtitle">${n.date}</p>
+                        </div>
+                    `;
+                    newsWrapper.appendChild(slide);
+                });
+
+                // Swiper 초기화 (script.js의 공통 설정 활용)
+                if (typeof Swiper !== 'undefined') {
+                    new Swiper(".newsSwiper", {
+                        slidesPerView: "auto", 
+                        spaceBetween: 10, 
+                        centeredSlides: true, 
+                        loop: true,
+                        speed: 800,
+                        autoplay: { delay: 6000, disableOnInteraction: false },
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 </html>

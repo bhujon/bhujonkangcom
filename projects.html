@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Bhujon Kang Architects</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* [기존 스타일 유지 및 보정] */
+        .grid-status, .list-status { text-transform: none !important; font-variant: normal !important; }
+        .list-item { padding-top: 12px !important; padding-bottom: 2px !important; }
+        .list-title .en, .list-title .ko, .grid-title .en, .grid-title .ko { line-height: 1.2 !important; }
+        body.kor-mode .list-title .ko, body.kor-mode .grid-title .ko { display: inline-block !important; vertical-align: baseline; }
+
+        /* [추가] 리스트 헤더 스타일 */
+        .list-header {
+            display: grid;
+            grid-template-columns: 1.5fr 2fr 0.8fr 0.5fr 1fr; 
+            gap: 20px;
+            padding: 10px 10px 15px 10px;
+            border-bottom: 2px solid #000;
+            font-weight: 700;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        /* [추가] 프로젝트 리스트 호버 팝업 스타일 (400x300px) */
+        #project-hover-popup {
+            position: fixed;
+            width: 400px;
+            height: 300px;
+            z-index: 10000;
+            pointer-events: none; /* 마우스 간섭 방지 */
+            display: none;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background: #fff;
+        }
+        #project-hover-popup img { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search-input" placeholder="Search" onkeyup="handleMenuSearch()">
+        <div id="menu-search-results"></div>
+    </div>
+
+    <div id="project-hover-popup"><img src="" alt="Project Preview"></div>
+
+    <main class="projects-container">
+        <div class="projects-controls">
+            <div class="view-toggles">
+                <button id="btn-grid-toggle" class="view-btn active" onclick="setProjectView('grid')"><span class="ko">그리드</span><span class="en">Grid</span></button>
+                <button id="btn-list-toggle" class="view-btn" onclick="setProjectView('list')"><span class="ko">리스트</span><span class="en">List</span></button>
+            </div>
+            <div class="project-search">
+                <input type="text" id="p-search-input" placeholder="Search Projects..." onkeyup="filterProjects()">
+            </div>
+        </div>
+
+        <div id="project-list-container"></div>
+    </main>
+
+    <footer id="contact" class="footer-section">
+        <div class="footer-container">
+            <div class="footer-office-info">
+                <h4><span class="ko">(주)강부존건축사사무소</span><span class="en">Bhujon Kang Architects, Co., Ltd.</span></h4>
+                <p><span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span><span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span></p>
+                <p><strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a></p>
+            </div>
+            <div class="footer-office-info">
+                <h4><span class="ko">Bhujon Kang Architects, PLLC, USA</span><span class="en">Bhujon Kang Architects, PLLC</span></h4>
+                <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+                <p><strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a></p>
+            </div>
+        </div>
+        <div class="footer-common">
+            <div class="footer-contact-links">
+                <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;"><a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a></p>
+                <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+            </div>
+            <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true, offset: 100 });</script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.currentProjectView = 'grid'; 
+
+        window.renderProjects = function(viewType, filterText = "") {
+            const container = document.getElementById('project-list-container');
+            const popup = document.getElementById('project-hover-popup');
+            const popupImg = popup.querySelector('img');
+            
+            if (!container) return; 
+
+            window.currentProjectView = viewType;
+            container.innerHTML = ""; 
+            container.className = viewType === 'grid' ? 'project-grid' : 'project-list';
+
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = (viewType === 'grid') ? document.getElementById('btn-grid-toggle') : document.getElementById('btn-list-toggle');
+            if (activeBtn) activeBtn.classList.add('active');
+
+            if (typeof projectData === 'undefined') return;
+
+            // [추가] 리스트 뷰일 때 상단 카테고리 헤더 삽입
+            if (viewType === 'list') {
+                const header = document.createElement('div');
+                header.className = 'list-header';
+                header.innerHTML = `
+                    <div class="list-col"><span class="ko">제목</span><span class="en">Title</span></div>
+                    <div class="list-col"><span class="ko">설명</span><span class="en">Subtitle</span></div>
+                    <div class="list-col"><span class="ko">상태</span><span class="en">Status</span></div>
+                    <div class="list-col"><span class="ko">연도</span><span class="en">Year</span></div>
+                    <div class="list-col"><span class="ko">용도</span><span class="en">Program</span></div>
+                `;
+                container.appendChild(header);
+            }
+
+            const sortedIds = Object.keys(projectData).sort((a, b) => parseInt(b) - parseInt(a));
+
+            sortedIds.forEach((id) => {
+                const p = projectData[id];
+                const searchText = filterText.toLowerCase();
+                
+                if (p.title.en.toLowerCase().includes(searchText) || p.title.ko.includes(searchText)) {
+                    const item = document.createElement('a');
+                    item.href = `view.html?id=${id}`;
+                    item.className = viewType === 'grid' ? 'grid-item' : 'list-item';
+                    item.setAttribute('data-aos', 'fade-up');
+
+                    if (viewType === 'grid') {
+                        item.innerHTML = `
+                            <div style="overflow:hidden;"><img src="${p.images[0]}" alt="${p.title.en}"></div>
+                            <div class="grid-info">
+                                <div class="grid-title"><span class="ko">${p.title.ko}</span><span class="en">${p.title.en}</span></div>
+                                <div class="grid-sub"><span class="ko">${p.subtitle.ko}</span><span class="en">${p.subtitle.en}</span></div>
+                                <div class="grid-meta-row">
+                                    <span class="grid-status"><span class="ko">${p.status ? p.status.ko : ''}</span><span class="en">${p.status ? p.status.en : ''}</span></span>
+                                    <span class="grid-year">${p.year}</span>
+                                </div>
+                            </div>`;
+                    } else {
+                        // 리스트 뷰 내부 데이터 구성 (Program 컬럼 포함)
+                        item.innerHTML = `
+                            <div class="list-col list-title"><span class="ko">${p.title.ko}</span><span class="en">${p.title.en}</span></div>
+                            <div class="list-col list-sub"><span class="ko">${p.subtitle.ko}</span><span class="en">${p.subtitle.en}</span></div>
+                            <div class="list-col list-status"><span class="ko">${p.status ? p.status.ko : ''}</span><span class="en">${p.status ? p.status.en : ''}</span></div>
+                            <div class="list-col list-year">${p.year}</div>
+                            <div class="list-col list-func"><span class="ko">${p.func ? p.func.ko : ''}</span><span class="en">${p.func ? p.func.en : ''}</span></div>`;
+
+                        // [추가] 뉴스 스타일 호버링 이벤트 (리스트 전용)
+                        item.addEventListener('mouseenter', () => {
+                            popupImg.src = p.images[0];
+                            popup.style.display = 'block';
+                        });
+
+                        item.addEventListener('mousemove', (e) => {
+                            popup.style.left = (e.clientX + 30) + 'px';
+                            popup.style.top = (e.clientY + 20) + 'px';
+                            // 화면 우측 경계 처리
+                            if (e.clientX + 430 > window.innerWidth) {
+                                popup.style.left = (e.clientX - 430) + 'px';
+                            }
+                        });
+
+                        item.addEventListener('mouseleave', () => {
+                            popup.style.display = 'none';
+                            popupImg.src = "";
+                        });
+                    }
+                    container.appendChild(item);
+                }
+            });
+
+            if (typeof AOS !== 'undefined') setTimeout(() => { AOS.refresh(); }, 150);
+        };
+
+        window.setProjectView = function(viewType) {
+            const searchInput = document.getElementById('p-search-input');
+            window.renderProjects(viewType, searchInput ? searchInput.value : "");
+        };
+
+        window.filterProjects = function() {
+            const searchInput = document.getElementById('p-search-input');
+            window.renderProjects(window.currentProjectView, searchInput ? searchInput.value : "");
+        };
+
+        document.addEventListener('DOMContentLoaded', () => { window.renderProjects('grid'); });
+    </script>
+</body>
+</html>

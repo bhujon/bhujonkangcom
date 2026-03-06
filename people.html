@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People | Bhujon Kang Architects</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* people.html 상단 <style> 구역 */
+        .view-title-xl {
+            font-size: 42px; 
+            font-weight: 400; /* <--- 이 숫자를 변경하세요! */
+            line-height: 1.1;
+            color: #000;
+        }
+
+        /* [Masonry Layout] */
+        .people-masonry {
+            column-count: 3;
+            column-gap: 30px;
+            margin-top: 60px;
+        }
+
+        .person-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 50px;
+            break-inside: avoid;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 30px;
+        }
+
+        .person-img {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #f4f4f4;
+        }
+
+        .person-img img {
+            width: 100%;
+            display: block;
+            filter: grayscale(100%);
+            transition: 0.6s ease;
+        }
+
+        .person-item:hover .person-img img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        .person-info .pos { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .person-info h3 { font-size: 22px; font-weight: 500; margin-bottom: 5px; color: #000; }
+        .person-info .qual { font-size: 12px; color: #aaa; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .person-info .desc { font-size: 14px; line-height: 1.7; color: #444; word-break: keep-all; }
+
+        /* [Alumni Section] */
+        .alumni-section {
+            margin-top: 100px;
+            padding: 60px 0 60px;
+            border-top: 2px solid #000;
+        }
+        .alumni-title {
+            font-size: 18px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 30px;
+        }
+        .alumni-list {
+            font-size: 14px; color: #606060; line-height: 2;
+        }
+
+        @media (max-width: 1024px) { .people-masonry { column-count: 2; } }
+        @media (max-width: 600px) { .people-masonry { column-count: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search-input" placeholder="Search" onkeyup="handleMenuSearch()">
+        <div id="menu-search-results"></div>
+    </div>
+
+    <main class="projects-container news-width-limit">
+        <div class="people-title-section" data-aos="fade-up">
+            <h1 class="view-title-xl"><span class="en">People</span><span class="ko">구성원</span></h1>
+        </div>
+
+        <div class="people-masonry" id="people-container"></div>
+
+        <section class="alumni-section" data-aos="fade-up">
+            <h2 class="alumni-title"><span class="en">Alumni</span><span class="ko">이전 구성원</span></h2>
+            <div class="alumni-list">
+                강준영, 김태현, 박소희, 서예린, 윤민호, 이다빈, 장우석, 정하윤, 최지안, 홍성민
+            </div>
+        </section>
+    </main>
+
+    <section id="contact" class="footer-section">
+        <div class="footer-container">
+            <div class="footer-office-info">
+                <h4>
+                    <span class="ko">(주)강부존건축사사무소</span>
+                    <span class="en">Bhujon Kang Architects, Co., Ltd.</span>
+                </h4>
+                <p>
+                    <span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span>
+                    <span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span>
+                </p>
+                <p>
+                    <strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a>
+                </p>
+            </div>
+
+            <div class="footer-office-info">
+                <h4>
+                    <span class="ko">Bhujon Kang Architects, PLLC, USA</span>
+                    <span class="en">Bhujon Kang Architects, PLLC</span>
+                </h4>
+                <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+                <p>
+                    <strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-common">
+            <div class="footer-contact-links">
+                <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;">
+                    <a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a>
+                </p>
+                <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+            </div>
+            <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+        </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('people-container');
+            if(typeof PeopleData !== 'undefined') {
+                Object.values(PeopleData).forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'person-item';
+                    item.setAttribute('data-aos', 'fade-up');
+                    item.innerHTML = `
+                        <div class="person-img"><img src="${p.image}" alt="${p.name.en}"></div>
+                        <div class="person-info">
+                            <p class="pos"><span class="ko">${p.position.ko}</span><span class="en">${p.position.en}</span></p>
+                            <h3><span class="ko">${p.name.ko}</span><span class="en">${p.name.en}</span></h3>
+                            <p class="qual"><span class="ko">${p.qualification.ko}</span><span class="en">${p.qualification.en}</span></p>
+                            <p class="desc"><span class="ko">${p.description.ko}</span><span class="en">${p.description.en}</span></p>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

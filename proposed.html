@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive | Bhujon Kang Architects</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* [언어 구분 강제 로직] */
+        .ko { display: none !important; }
+        .en { display: inline-block !important; }
+
+        body.kor-mode .ko { display: inline-block !important; }
+        body.kor-mode .en { display: none !important; }
+        
+        body.kor-mode .view-title-xl .ko { display: block !important; }
+        .view-title-xl .en { display: block !important; }
+
+        .archive-title-section {
+            text-align: left;
+            margin-bottom: 60px;
+            padding-left: 10px;
+        }
+        .view-title-xl {
+            font-size: 45px; 
+            font-weight: 500;
+            line-height: 1.1;
+            color: #000;
+        }
+
+        .archive-list-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .list-item.archive-row {
+            grid-template-columns: 2fr 0.5fr 1.5fr 1fr; 
+            padding-top: 12px !important;
+            padding-bottom: 2px !important;
+            cursor: default;
+        }
+        .list-item.archive-row:hover { transform: none; background: #f9f9f9; }
+
+        /* [요청사항] 이미지 호버링 팝업 스타일 (300x200) */
+        .hover-popup {
+            position: fixed;
+            display: none;
+            width: 300px;
+            height: 200px;
+            z-index: 10000;
+            pointer-events: none;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
+        }
+        .hover-popup img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }        
+
+        .archive-header {
+            display: grid;
+            grid-template-columns: 2fr 0.5fr 1.5fr 1fr;
+            gap: 20px;
+            padding: 0 10px 10px;
+            border-bottom: 2px solid #000;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .view-title-xl { font-size: 32px; }
+            .archive-header { display: none; }
+            .list-item.archive-row { grid-template-columns: 1fr; gap: 5px; padding: 20px 10px; }
+            .hover-popup { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="archive-hover-popup" class="hover-popup">
+        <img src="" alt="Archive Preview">
+    </div>
+
+    <main class="projects-container news-width-limit">
+        <div class="archive-title-section" data-aos="fade-up">
+            <h1 class="view-title-xl">
+                <span class="en">Projects in Archive</span>
+                <span class="ko">제안 프로젝트</span>
+            </h1>
+        </div>
+
+        <div class="archive-header" data-aos="fade-up">
+            <div class="list-col"><span class="ko">용역명</span><span class="en">Project Title</span></div>
+            <div class="list-col"><span class="ko">연도</span><span class="en">Year</span></div>
+            <div class="list-col"><span class="ko">발주처</span><span class="en">Client</span></div>
+            <div class="list-col"><span class="ko">기능</span><span class="en">Program</span></div>
+        </div>
+        <div id="archive-list-container" class="archive-list-container"></div>
+    </main>
+
+    <section id="contact" class="footer-section">
+        <div class="footer-container">
+            <div class="footer-office-info">
+                <h4><span class="ko">(주)강부존건축사사무소</span><span class="en">Bhujon Kang Architects, Co., Ltd.</span></h4>
+                <p><span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span><span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span></p>
+                <p><strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a></p>
+            </div>
+            <div class="footer-office-info">
+                <h4><span class="ko">Bhujon Kang Architects, PLLC, USA</span><span class="en">Bhujon Kang Architects, PLLC</span></h4>
+                <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+                <p><strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a></p>
+            </div>
+        </div>
+        <div class="footer-common">
+            <div class="footer-contact-links">
+                <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;"><a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a></p>
+                <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+            </div>
+            <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true, offset: 100 });</script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        window.renderarchive = function() {
+            const container = document.getElementById('archive-list-container');
+            const popup = document.getElementById('archive-hover-popup');
+            const popupImg = popup.querySelector('img');
+            
+            if (!container || typeof ArchiveData === 'undefined') return; 
+            container.innerHTML = ""; 
+
+            const sortedIds = Object.keys(ArchiveData).sort((a, b) => parseInt(b) - parseInt(a));
+
+            sortedIds.forEach((id) => {
+                const p = ArchiveData[id]; // 변수명을 p로 선언
+                const item = document.createElement('div');
+                item.className = 'list-item archive-row'; 
+                item.setAttribute('data-aos', 'fade-up');
+
+                item.innerHTML = `
+                    <div class="list-col">
+                        <span class="ko">${p.title.ko}</span><span class="en">${p.title.en}</span>
+                    </div>
+                    <div class="list-col">${p.year}</div>
+                    <div class="list-col">
+                        <span class="ko">${p.client.ko}</span><span class="en">${p.client.en}</span>
+                    </div>
+                    <div class="list-col">
+                        <span class="ko">${p.program.ko}</span><span class="en">${p.program.en}</span>
+                    </div>
+                `;
+
+                // [수정] 변수명을 p.image로 통일하여 참조 에러 해결
+                item.addEventListener('mouseenter', () => {
+                    if (p.image && p.image !== "") {
+                        popupImg.src = p.image;
+                        popup.style.display = 'block';
+                    }
+                });
+
+                item.addEventListener('mousemove', (e) => {
+                    popup.style.left = (e.clientX + 20) + 'px';
+                    popup.style.top = (e.clientY + 20) + 'px';
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    popup.style.display = 'none';
+                    popupImg.src = "";
+                });
+
+                container.appendChild(item);
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', renderarchive);
+    </script>
+</body>
+</html>

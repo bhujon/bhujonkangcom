@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Bhujon Kang Architects</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* [언어 구분 강제 로직] */
+        .ko { display: none !important; }
+        .en { display: inline-block !important; }
+
+        body.kor-mode .ko { display: inline-block !important; }
+        body.kor-mode .en { display: none !important; }
+        
+
+
+        /* [제목 스타일: view.html 기준 60px] */
+        .news-title-section {
+            text-align: left;
+            margin-bottom: 60px;
+            padding-left: 10px; /* 리스트 텍스트와 시작점 일치 */
+        }
+        .view-title-xl {
+            font-size: 45px; 
+            font-weight: 500;
+            line-height: 1.1;
+            color: #000;
+        }
+
+        /* [리스트 레이아웃] */
+        .news-list-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .list-item.news-row {
+            grid-template-columns: 1.5fr 2fr 0.8fr; 
+            padding-top: 12px !important;
+            padding-bottom: 2px !important;
+        }
+
+        /* [호버 팝업: 400x300px] */
+        #news-hover-popup {
+            position: fixed;
+            width: 400px;
+            height: 300px;
+            z-index: 10000;
+            pointer-events: none;
+            display: none;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background: #fff;
+        }
+        #news-hover-popup img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .projects-controls {
+            justify-content: flex-end;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .view-title-xl { font-size: 32px; }
+            .news-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search-input" placeholder="Search" onkeyup="handleMenuSearch()">
+        <div id="menu-search-results"></div>
+    </div>
+
+    <div id="news-hover-popup"><img src="" alt="News Preview"></div>
+
+    <main class="projects-container news-width-limit">
+        <div class="news-title-section" data-aos="fade-up">
+            <h1 class="view-title-xl">
+                <span class="en">News</span>
+                <span class="ko">소식</span>
+            </h1>
+        </div>
+
+        <div class="projects-controls" data-aos="fade-up">
+            <div class="project-search">
+                <input type="text" id="n-search-input" placeholder="Search News..." onkeyup="filterNews()">
+            </div>
+        </div>
+        <div id="news-list-container" class="news-list-container"></div>
+    </main>
+
+    <section id="contact" class="footer-section">
+    <div class="footer-container">
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">(주)강부존건축사사무소</span>
+                <span class="en">Bhujon Kang Architects, Co., Ltd.</span>
+            </h4>
+            <p>
+                <span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span>
+                <span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span>
+            </p>
+            <p>
+                <strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a>
+            </p>
+        </div>
+
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">Bhujon Kang Architects, PLLC, USA</span>
+                <span class="en">Bhujon Kang Architects, PLLC</span>
+            </h4>
+            <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+            <p>
+                <strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer-common">
+        <div class="footer-contact-links">
+            <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;">
+                <a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a>
+            </p>
+            <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+        </div>
+        <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+    </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true, offset: 100 });</script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        window.renderNews = function(filterText = "") {
+            const container = document.getElementById('news-list-container');
+            const popup = document.getElementById('news-hover-popup');
+            const popupImg = popup.querySelector('img');
+            
+            if (!container) return; 
+            container.innerHTML = ""; 
+
+            if (typeof newsData === 'undefined') return;
+
+            const sortedIds = Object.keys(newsData).sort((a, b) => {
+                return parseInt(b.replace('news', '')) - parseInt(a.replace('news', ''));
+            });
+
+            sortedIds.forEach((id) => {
+                const n = newsData[id];
+                const searchText = filterText.toLowerCase();
+                
+                if (n.title.en.toLowerCase().includes(searchText) || n.title.ko.includes(searchText)) {
+                    const item = document.createElement('a');
+                    item.href = `view_news.html?id=${id}`;
+                    item.className = 'list-item news-row'; 
+                    item.setAttribute('data-aos', 'fade-up');
+
+                    item.innerHTML = `
+                        <div class="list-col list-title">
+                            <span class="ko">${n.title.ko}</span><span class="en">${n.title.en}</span>
+                        </div>
+                        <div class="list-col list-sub">
+                            <span class="ko">${n.subtitle.ko}</span><span class="en">${n.subtitle.en}</span>
+                        </div>
+                        <div class="list-col list-status" style="text-align: right; text-transform: none;">
+                            ${n.date}
+                        </div>
+                    `;
+
+                    item.addEventListener('mouseenter', () => {
+                        popupImg.src = n.image;
+                        popup.style.display = 'block';
+                    });
+
+                    item.addEventListener('mousemove', (e) => {
+                        popup.style.left = (e.clientX + 30) + 'px';
+                        popup.style.top = (e.clientY + 20) + 'px';
+                        
+                        if (e.clientX + 430 > window.innerWidth) {
+                            popup.style.left = (e.clientX - 430) + 'px';
+                        }
+                    });
+
+                    item.addEventListener('mouseleave', () => {
+                        popup.style.display = 'none';
+                        popupImg.src = "";
+                    });
+
+                    container.appendChild(item);
+                }
+            });
+
+            if (typeof AOS !== 'undefined') {
+                setTimeout(() => { AOS.refresh(); }, 150);
+            }
+        };
+
+        window.filterNews = function() {
+            const searchInput = document.getElementById('n-search-input');
+            renderNews(searchInput ? searchInput.value : "");
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNews(); 
+        });
+    </script>
+</body>
+</html>

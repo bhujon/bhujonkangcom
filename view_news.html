@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News View | Bhujon Kang Architects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* 뉴스 상세 전용 스타일 */
+        .view-container {
+            padding-top: 150px;
+            padding-bottom: 100px;
+            max-width: 1000px; /* 뉴스는 텍스트 위주라 폭을 조금 좁힘 */
+            margin: 0 auto;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+        
+        .view-header { margin-bottom: 50px; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 30px; }
+        .view-title { font-size: 36px; font-weight: 700; color: #000; margin-bottom: 10px; line-height: 1.2; }
+        .view-subtitle { font-size: 18px; color: #666; font-weight: 400; margin-bottom: 20px; }
+        .view-date { font-size: 14px; color: #888; display: block; margin-top: 10px; }
+
+        .view-content { margin-bottom: 60px; }
+        .view-main-img { width: 100%; height: auto; margin-bottom: 40px; display: block; }
+        .view-text { font-size: 16px; line-height: 1.8; color: #333; white-space: pre-line; }
+
+        @media (max-width: 768px) {
+            .view-container { padding-top: 100px; padding-left: 20px; padding-right: 20px; }
+            .view-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search-input" placeholder="Search" onkeyup="handleMenuSearch()">
+        <div id="menu-search-results"></div>
+    </div>
+
+    <div class="view-container">
+        <div class="view-header">
+            <div id="n-title" class="view-title"></div>
+            <div id="n-subtitle" class="view-subtitle"></div>
+            <span id="n-date" class="view-date"></span>
+        </div>
+
+        <div class="view-content">
+            <img id="n-image" class="view-main-img" src="" alt="News Image">
+            
+            <div id="n-text" class="view-text"></div>
+        </div>
+        
+        <div style="text-align:center; margin-top:50px;">
+            <a href="news.html" style="text-decoration:underline; font-weight:700; font-size:14px;">
+                <span class="en">Back to News</span><span class="ko">목록으로</span>
+            </a>
+        </div>
+    </div>
+
+    <section id="contact" class="footer-section">
+    <div class="footer-container">
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">(주)강부존건축사사무소</span>
+                <span class="en">Bhujon Kang Architects, Co., Ltd.</span>
+            </h4>
+            <p>
+                <span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span>
+                <span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span>
+            </p>
+            <p>
+                <strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a>
+            </p>
+        </div>
+
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">Bhujon Kang Architects, PLLC, USA</span>
+                <span class="en">Bhujon Kang Architects, PLLC</span>
+            </h4>
+            <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+            <p>
+                <strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer-common">
+        <div class="footer-contact-links">
+            <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;">
+                <a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a>
+            </p>
+            <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+        </div>
+        <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+    </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id'); 
+            
+            if (typeof newsData !== 'undefined' && newsData[id]) {
+                const n = newsData[id];
+                
+                // 데이터 주입
+                document.getElementById('n-title').innerHTML = `<span class="ko">${n.title.ko}</span><span class="en">${n.title.en}</span>`;
+                document.getElementById('n-subtitle').innerHTML = `<span class="ko">${n.subtitle.ko}</span><span class="en">${n.subtitle.en}</span>`;
+                document.getElementById('n-date').innerText = n.date;
+                
+                const imgEl = document.getElementById('n-image');
+                if(n.image) {
+                    imgEl.src = n.image;
+                    imgEl.alt = n.title.en;
+                } else {
+                    imgEl.style.display = 'none';
+                }
+
+                // 본문 텍스트 (객체인 경우 분기 처리)
+                const textContainer = document.getElementById('n-text');
+                if(typeof n.text === 'object') {
+                    textContainer.innerHTML = `<span class="ko">${n.text.ko}</span><span class="en">${n.text.en}</span>`;
+                } else {
+                    textContainer.innerHTML = n.text;
+                }
+
+            } else {
+                document.querySelector('.view-container').innerHTML = `
+                    <h1 style='text-align:center; margin-top:50px;'>News Not Found</h1>
+                    <div style="text-align:center; margin-top:20px;">
+                        <a href="news.html" style="text-decoration:underline; font-weight:bold;">Back to List</a>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

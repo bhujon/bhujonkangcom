@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awards | Bhujon Kang Architects</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* [언어 구분 강제 로직] */
+        /* 기본: 영어 노출, 한글 숨김 */
+        .ko { display: none !important; }
+        .en { display: inline-block !important; }
+
+        /* 한글 모드 활성화 시: 한글 노출, 영어 숨김 */
+        body.kor-mode .ko { display: inline-block !important; }
+        body.kor-mode .en { display: none !important; }
+        
+        /* 제목 영역에 대해서는 block 속성 유지 */
+        body.kor-mode .view-title-xl .ko { display: block !important; }
+        .view-title-xl .en { display: block !important; }
+
+        /* [제목 스타일: view.html 기준 60px] */
+        .awarded-title-section {
+            text-align: left;
+            margin-bottom: 60px;
+            padding-left: 10px; /* 리스트 텍스트와 시작점 일치 */
+        }
+        .view-title-xl {
+            font-size: 45px; 
+            font-weight: 500;
+            line-height: 1.1;
+            color: #000;
+        }
+
+        /* [Awarded 리스트 레이아웃] */
+        .awarded-list-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        /* 5개 컬럼 (용역명, 순위, 연도, 발주처, 기능) */
+        .list-item.awarded-row {
+            grid-template-columns: 2fr 1fr 0.5fr 1fr 1fr; 
+            padding-top: 12px !important;
+            padding-bottom: 2px !important;
+            cursor: default;
+        }
+        .list-item.awarded-row:hover { transform: none; background: #f9f9f9; }
+
+        /* [호버 팝업: 400x300px] */
+        #award-hover-popup {
+            position: fixed;
+            width: 400px;
+            height: 250px;
+            z-index: 10000;
+            pointer-events: none;
+            display: none;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background: #fff;
+        }
+        #award-hover-popup img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 리스트 헤더 스타일 */
+        .awarded-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 0.5fr 1fr 1fr;
+            gap: 20px;
+            padding: 0 10px 10px;
+            border-bottom: 2px solid #000;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .view-title-xl { font-size: 32px; }
+            .awarded-header { display: none; }
+            .list-item.awarded-row { grid-template-columns: 1fr; gap: 5px; padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
+    </header>
+
+    <div id="fullscreen-menu" class="menu-overlay">
+        <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
+        <nav>
+            <ul>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="award-hover-popup"><img src="" alt="Award Preview"></div>
+
+    <main class="projects-container news-width-limit">
+        <div class="awarded-title-section" data-aos="fade-up">
+            <h1 class="view-title-xl">
+                <span class="en">Awarded Projects</span>
+                <span class="ko">공공건축 수상작</span>
+            </h1>
+        </div>
+
+        <div class="awarded-header" data-aos="fade-up">
+            <div class="list-col"><span class="ko">용역명</span><span class="en">Project Title</span></div>
+            <div class="list-col"><span class="ko">순위</span><span class="en">Rank</span></div>
+            <div class="list-col"><span class="ko">연도</span><span class="en">Year</span></div>
+            <div class="list-col"><span class="ko">발주처</span><span class="en">Client</span></div>
+            <div class="list-col"><span class="ko">기능</span><span class="en">Program</span></div>
+        </div>
+        <div id="awarded-list-container" class="awarded-list-container"></div>
+    </main>
+
+    <section id="contact" class="footer-section">
+    <div class="footer-container">
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">(주)강부존건축사사무소</span>
+                <span class="en">Bhujon Kang Architects, Co., Ltd.</span>
+            </h4>
+            <p>
+                <span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span>
+                <span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span>
+            </p>
+            <p>
+                <strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a>
+            </p>
+        </div>
+
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">Bhujon Kang Architects, PLLC, USA</span>
+                <span class="en">Bhujon Kang Architects, PLLC</span>
+            </h4>
+            <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+            <p>
+                <strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a>
+            </p>
+        </div>
+    </div>
+    <div class="footer-common">
+        <div class="footer-contact-links">
+            <p style="margin-bottom: 10px; font-size: 13px; font-weight: 700;">
+                <a href="mailto:info@bhujonkang.com">info@bhujonkang.com</a>
+            </p>
+            <a href="https://www.instagram.com/bhujonarch" target="_blank" class="instagram-link">Instagram</a>
+        </div>
+        <p class="copyright">© 2024 Bhujon Kang Architects. All Rights Reserved.</p>
+    </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true, offset: 100 });</script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        window.renderAwarded = function() {
+            const container = document.getElementById('awarded-list-container');
+            const popup = document.getElementById('award-hover-popup');
+            const popupImg = popup.querySelector('img');
+            
+            if (!container || typeof awardedData === 'undefined') return; 
+            container.innerHTML = ""; 
+
+            // 최신 연도순 정렬
+            const sortedIds = Object.keys(awardedData).sort((a, b) => parseInt(b) - parseInt(a));
+
+            sortedIds.forEach((id) => {
+                const a = awardedData[id];
+                const item = document.createElement('div');
+                item.className = 'list-item awarded-row'; 
+                item.setAttribute('data-aos', 'fade-up');
+
+                item.innerHTML = `
+                    <div class="list-col">
+                        <span class="ko">${a.title.ko}</span><span class="en">${a.title.en}</span>
+                    </div>
+                    <div class="list-col">
+                        <span class="ko">${a.rank.ko}</span><span class="en">${a.rank.en}</span>
+                    </div>
+                    <div class="list-col">${a.year}</div>
+                    <div class="list-col">
+                        <span class="ko">${a.client.ko}</span><span class="en">${a.client.en}</span>
+                    </div>
+                    <div class="list-col">
+                        <span class="ko">${a.program.ko}</span><span class="en">${a.program.en}</span>
+                    </div>
+                `;
+
+                // 이미지 팝업 인터랙션
+                item.addEventListener('mouseenter', () => {
+                    popupImg.src = a.image;
+                    popup.style.display = 'block';
+                });
+
+                item.addEventListener('mousemove', (e) => {
+                    popup.style.left = (e.clientX + 30) + 'px';
+                    popup.style.top = (e.clientY + 20) + 'px';
+                    if (e.clientX + 430 > window.innerWidth) {
+                        popup.style.left = (e.clientX - 430) + 'px';
+                    }
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    popup.style.display = 'none';
+                    popupImg.src = "";
+                });
+
+                container.appendChild(item);
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', renderAwarded);
+    </script>
+</body>
+</html>

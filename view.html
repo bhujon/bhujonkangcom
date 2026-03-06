@@ -3,168 +3,395 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project View | ARCHI LAB</title>
+    <title>Project View | Bhujon Kang Architects</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="icon" href="favicon.png" type="image/png"> 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
+
     <style>
-        .sub-content-wrapper { width: 80vw; margin: 0 auto; padding-top: 120px; padding-bottom: 100px; }
+        /* [스타일 복구 및 히어로 영역 최적화] */
+        body { background: #fff; }
         
-        /* 헤더 텍스트 */
-        .project-header { text-align: left; margin-bottom: 40px; }
-        .project-title { font-family: 'Avenir', 'Nunito Sans', sans-serif; font-size: 100px; color: #000; font-weight: 700; line-height: 1.1; margin-bottom: 10px; }
-        .project-subtitle { font-family: 'Nanum Gothic', sans-serif; font-size: 24px; color: #ccc; font-weight: 400; }
-        
-        /* 슬라이드 컨테이너 */
-        .project-swiper { 
-            width: 100%; 
-            height: 60vh; /* 높이 지정 필수 */
-            position: relative; 
-            background-color: #f4f4f4; /* 이미지가 안 뜰 때 영역 확인용 배경색 */
-        }
-        
-        /* [중요] 슬라이드 높이 100% 강제 지정 */
-        .swiper-slide {
-            width: 100%;
-            height: 100%; 
+        header {
+            z-index: 9000 !important;
+            background: #fff !important;
+            border-bottom: 1px solid #eee;
         }
 
-        /* 이미지 꽉 채우기 */
-        .swiper-slide img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            display: block; /* 공백 제거 */
+        .view-content-wrapper {
+            padding-top: 150px; 
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
+
+        /* 1. 최상단 Hero 이미지 - 잘림 방지 수정 */
+        .view-hero-area {
+            padding: 0 50px;
+            margin-bottom: 65px; 
+            width: 100%;
+        }
+        .hero-unit {
+            width: 100%;
+            height: auto; /* 고정 높이 대신 내용물에 맞게 조절 */
+            min-height: auto; /* 40vw 제한 해제 */
+            max-height: none; /* 85vh 제한 해제하여 전체 이미지 노출 */
+            overflow: hidden;
+            cursor: pointer;
+            background: #f9f9f9;
+            position: relative;
+        }
+        .hero-unit img {
+            width: 100%; 
+            height: auto; /* 비율 유지하며 전체 노출 */
+            object-fit: contain; /* 프레임 내에 전체 이미지가 들어가도록 설정 */
+            display: block; 
+            transition: transform 0.5s ease;
+        }
+
+        /* 2. 제목 영역 */
+        .view-title-section {
+            padding: 0 50px;
+            margin-bottom: 60px; 
+            text-align: left;
+            position: relative;
+            z-index: 10;
+        }
+        .view-title-xl {
+            font-size: 60px; 
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            color: #000;
+            display: block;
+        }
+        .view-subtitle-xl {
+            font-size: 30px; 
+            color: #555;
+            font-weight: 400;
+            display: block;
+        }
+
+        /* 3. 상세 정보 섹션 (50:50 분할) */
+        .view-footer-detail {
+            display: flex;
+            padding: 0 50px 60px; 
+            align-items: flex-start;
+        }
+        .meta-col-left {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 7.5px; 
+            font-size: 16px;
+            color: #000;
+        }
+        .meta-entry strong { 
+            display: inline-block;
+            width: 100px; 
+            font-weight: 700; 
+            margin-right: 15px; 
+        }
+
+        .desc-col-right {
+            width: 50%;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            text-align: left; 
+        }
+
+        /* 4. 6열 벤토 그리드 */
+        .bento-grid-area {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); 
+            grid-auto-rows: 15vw; 
+            gap: 10px; 
+            padding: 0 50px 20px;
+            grid-auto-flow: dense;
+        }
+        .bento-unit { overflow: hidden; cursor: pointer; background: #f9f9f9; position: relative; }
+        .bento-unit img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s ease; }
+        .bento-unit.wide { grid-column: span 2; } 
+        .bento-unit.tall { grid-row: span 2; }
+
+        /* 비디오 플레이 버튼 오버레이 */
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center;
+            transition: 0.3s;
+        }
+        .hero-unit:hover .video-overlay, .bento-unit:hover .video-overlay { background: rgba(0,0,0,0.3); }
+        .play-icon {
+            width: 50px; height: 50px; background: rgba(255,255,255,0.9);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        }
+        .play-icon::after {
+            content: ''; border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+            border-left: 14px solid #000; margin-left: 4px;
+        }
+
+        /* 5. 라이트박스 */
+        .custom-lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); 
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .custom-lightbox.active { opacity: 1; visibility: visible; }
         
-        .swiper-button-next, .swiper-button-prev { color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        .lightbox-content { position: relative; display: flex; justify-content: center; align-items: center; max-width: 85%; }
+        .lightbox-content img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; cursor: pointer; }
         
-        .project-meta { display: flex; justify-content: space-between; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
-        .meta-text { font-family: 'Avenir', 'Nunito Sans', 'Nanum Gothic', sans-serif; font-size: 15px; color: #000; font-weight: 500; }
-        
-        .project-description { margin-top: 100px; margin-left: 20vw; width: 60vw; font-size: 20px; line-height: 1.8; color: #333; text-align: justify; }
-        
-        @media (max-width: 768px) { 
-            .sub-content-wrapper { width: 90vw; } 
-            .project-title { font-size: 50px; } 
-            .project-description { margin-left: 0; width: 100%; } 
-            .project-swiper { height: 40vh; } 
+        #lightbox-play-btn {
+            position: absolute; width: 80px; height: 80px; background: #fff;
+            border-radius: 50%; display: none; justify-content: center; align-items: center;
+            pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        #lightbox-play-btn::after {
+            content: ''; border-top: 15px solid transparent; border-bottom: 15px solid transparent;
+            border-left: 25px solid #000; margin-left: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .view-subtitle-xl, .view-footer-detail { display: none !important; }
+            .view-content-wrapper { padding-top: 100px; }
+            .view-hero-area, .view-title-section { padding: 0 20px; }
+            .view-title-xl { font-size: 32px; }
+            .bento-grid-area {
+                grid-template-columns: 1fr; padding: 0 20px; gap: 10px; grid-auto-rows: 60vw;
+            }
+            .bento-unit.wide, .bento-unit.tall { grid-column: auto; grid-row: auto; }
         }
     </style>
 </head>
-<body>
+<body class="view-detail-page">
 
     <header>
-        <div class="logo"><a href="index.html">ARCHI LAB</a></div>
-        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">menu</span></button>
-        <div class="right-control"><button id="lang-btn" onclick="toggleLanguage()">EN</button></div>
+        <div class="logo"><a href="index.html"><img src="logo.png" alt="ARCHI LAB"></a></div>
+        <button id="menu-btn" onclick="toggleMenu()"><span class="ko">메뉴</span><span class="en">Menu</span></button>
+        <div class="right-control"><button id="header-lang-btn" onclick="toggleLanguage()">한글</button></div>
     </header>
 
     <div id="fullscreen-menu" class="menu-overlay">
         <button class="close-btn" onclick="toggleMenu()"><span class="ko">닫기</span><span class="en">close</span></button>
         <nav>
             <ul>
-                <li><a href="index.html" onclick="toggleMenu()"><span class="ko">홈</span><span class="en">Home</span></a></li>
-                <li><a href="#" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="about.html" onclick="toggleMenu()"><span class="ko">소개</span><span class="en">About</span></a></li>
+                <li><a href="projects.html" onclick="toggleMenu()"><span class="ko">프로젝트</span><span class="en">Projects</span></a></li>
+                <li><a href="news.html" onclick="toggleMenu()"><span class="ko">소식</span><span class="en">News</span></a></li>
+                <li><a href="contact.html" onclick="toggleMenu()"><span class="ko">연락처</span><span class="en">Contact</span></a></li>
             </ul>
         </nav>
-        <input type="text" id="search-input" placeholder="검색">
     </div>
 
-    <main class="sub-content-wrapper">
-        <div class="project-header">
-            <h1 class="project-title" id="p-title">Loading...</h1>
-            <p class="project-subtitle" id="p-subtitle"></p>
+    <div class="view-content-wrapper">
+        <section id="hero-area" class="view-hero-area" data-aos="fade-up"></section>
+
+        <div class="view-title-section" data-aos="fade-up">
+            <h1 id="p-title" class="view-title-xl"></h1>
+            <p id="p-subtitle" class="view-subtitle-xl"></p>
         </div>
 
-        <div class="swiper projectSwiper">
-            <div class="swiper-wrapper" id="p-slider-wrapper"></div>
-            
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+        <div class="view-footer-detail" data-aos="fade-up">
+            <div class="meta-col-left">
+                <div class="meta-entry">
+                    <strong><span class="ko">연도</span><span class="en">Year</span></strong> 
+                    <span id="p-year"></span>
+                </div>
+                <div class="meta-entry">
+                    <strong><span class="ko">위치</span><span class="en">Location</span></strong> 
+                    <span id="p-location"></span>
+                </div>
+                <div class="meta-entry">
+                    <strong><span class="ko">상태</span><span class="en">Status</span></strong> 
+                    <span id="p-status"></span>
+                </div>
+            </div>
+            <div id="p-desc" class="desc-col-right"></div>
         </div>
 
-        <div class="project-meta">
-            <span class="meta-text" id="p-year"></span>
-            <span class="meta-text" id="p-location"></span>
+        <div id="bento-area" class="bento-grid-area"></div>
+
+        <div style="text-align:center; padding: 60px 0 100px;" data-aos="fade-up">
+            <a href="projects.html" style="text-decoration:underline; font-weight:700; font-size:13px; color:#000; text-transform: uppercase; letter-spacing: 1px;">
+                <span class="en">Back to Projects</span>
+                <span class="ko">이전으로 돌아가기</span>
+            </a>
+        </div>
+    </div>
+
+    <div id="lightbox-ui" class="custom-lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content">
+            <img id="target-img" src="" onclick="handleLightboxClick(event)">
+            <div id="lightbox-play-btn"></div>
+        </div>
+    </div>
+
+    <footer id="contact" class="footer-section">
+    <div class="footer-container">
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">(주)강부존건축사사무소</span>
+                <span class="en">Bhujon Kang Architects, Co., Ltd.</span>
+            </h4>
+            <p>
+                <span class="ko">부산광역시 연제구 연제로30 비스타동원 105동 8307호</span>
+                <span class="en">#8307, 105-dong, 30, Yeonje-ro, Yeonje-gu, Busan, Republic of Korea</span>
+            </p>
+            <p>
+                <strong>T</strong> <a href="tel:0519280047">+82 (051) 928-0047</a>
+            </p>
         </div>
 
-        <div class="project-description">
-            <p id="p-desc"></p>
+        <div class="footer-office-info">
+            <h4>
+                <span class="ko">Bhujon Kang Architects, PLLC, USA</span>
+                <span class="en">Bhujon Kang Architects, PLLC</span>
+            </h4>
+            <p>2205 East 7th Avenue, Flagstaff, Arizona 86004</p>
+            <p>
+                <strong>T</strong> <a href="tel:19282885446">+1 (928) 288-5446</a>
+            </p>
         </div>
-    </main>
+    </div>
+    </footer>
 
-    <section id="contact" class="footer-section">
-        <h2><span class="ko">문의하기</span><span class="en">Contact Us</span></h2>
-        <p>contact@archilab.com</p>
-        <p class="copyright">© 2024 ARCHI LAB.</p>
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, once: true });</script>
+    <script src="data.js"></script> 
     <script src="script.js"></script>
-    <script src="data.js"></script>
 
     <script>
-        // 1. URL 파라미터 확인
-        const params = new URLSearchParams(window.location.search);
-        const projectId = params.get('id'); 
-        
-        // 2. 데이터 가져오기
-        const data = projectData[projectId];
+        let currentVideoId = null;
 
-        if (data) {
-            // 텍스트 데이터 주입
-            document.getElementById('p-title').innerText = data.title;
-            document.getElementById('p-subtitle').innerText = data.subtitle;
-            document.getElementById('p-year').innerText = data.year;
-            document.getElementById('p-location').innerText = data.location;
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const project = projectData[id];
 
-            // 설명 주입
-            const descContainer = document.getElementById('p-desc');
-            descContainer.innerHTML = `
-                <span class="ko">${data.desc.ko}</span>
-                <span class="en">${data.desc.en}</span>
-            `;
+            if (!project) return;
 
-            // 3. [중요] 이미지 슬라이드 동적 생성
-            const sliderWrapper = document.getElementById('p-slider-wrapper');
-            
-            // 기존 내용 초기화 (중복 방지)
-            sliderWrapper.innerHTML = '';
-
-            data.images.forEach(imgUrl => {
-                const slideDiv = document.createElement('div');
-                slideDiv.className = 'swiper-slide';
-                // 이미지 태그 생성
-                slideDiv.innerHTML = `<img src="${imgUrl}" alt="Project Image">`;
-                sliderWrapper.appendChild(slideDiv);
-            });
-
-            // 4. [핵심] Swiper 초기화 (observer 옵션 필수)
-            var projectSwiper = new Swiper(".projectSwiper", {
-                // 동적 변경 감지 옵션 (이미지 안 뜨는 문제 해결의 핵심)
-                observer: true,
-                observeParents: true,
-                
-                spaceBetween: 0,
-                centeredSlides: true,
-                autoplay: { delay: 3000, disableOnInteraction: false },
-                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-                loop: true,
-                speed: 1000,
-            });
-
-            // 언어 설정 초기화
-            if (document.body.classList.contains('eng-mode')) {
-                // CSS가 처리하므로 추가 작업 불필요
+            function getYoutubeId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
             }
 
-        } else {
-            // 데이터 없을 때
-            document.querySelector('.sub-content-wrapper').innerHTML = "<h1 style='text-align:center; margin-top:100px;'>Project Not Found</h1><p style='text-align:center;'>URL을 확인해주세요.</p>";
+            document.getElementById('p-title').innerHTML = `<span class="ko">${project.title.ko}</span><span class="en">${project.title.en}</span>`;
+            document.getElementById('p-subtitle').innerHTML = `<span class="ko">${project.subtitle.ko}</span><span class="en">${project.subtitle.en}</span>`;
+            document.getElementById('p-year').innerText = project.year || '-';
+            if(project.location) document.getElementById('p-location').innerHTML = `<span class="ko">${project.location.ko}</span><span class="en">${project.location.en}</span>`;
+            if(project.status) document.getElementById('p-status').innerHTML = `<span class="ko">${project.status.ko}</span><span class="en">${project.status.en}</span>`;
+            if(project.desc) document.getElementById('p-desc').innerHTML = `<span class="ko">${project.desc.ko}</span><span class="en">${project.desc.en}</span>`;
+
+            const heroArea = document.getElementById('hero-area');
+            const bentoArea = document.getElementById('bento-area');
+            
+            const heroUrl = project.images[0];
+            const heroYtId = getYoutubeId(heroUrl);
+            const heroUnit = document.createElement('div');
+            heroUnit.className = 'hero-unit';
+            
+            if (heroYtId) {
+                heroUnit.innerHTML = `<img src="https://img.youtube.com/vi/${heroYtId}/maxresdefault.jpg"><div class="video-overlay"><div class="play-icon"></div></div>`;
+                heroUnit.onclick = () => openLightbox(heroUrl, heroYtId);
+            } else {
+                heroUnit.innerHTML = `<img src="${heroUrl}">`;
+                heroUnit.onclick = () => openLightbox(heroUrl);
+            }
+            heroArea.appendChild(heroUnit);
+
+            const remainingUrls = project.images.slice(1);
+            if (remainingUrls.length > 0) {
+                packAndRenderGrid(remainingUrls);
+            }
+
+            async function packAndRenderGrid(urls) {
+                const items = await Promise.all(urls.map(url => {
+                    const ytId = getYoutubeId(url);
+                    if (ytId) {
+                        return Promise.resolve({ url, ytId, type: 'wide' });
+                    }
+                    return new Promise((resolve) => {
+                        const img = new Image();
+                        img.src = url;
+                        img.onload = () => {
+                            const ratio = img.naturalWidth / img.naturalHeight;
+                            let type = 'normal';
+                            if (ratio > 1.2) type = 'wide'; 
+                            else if (ratio < 0.7) type = 'tall';
+                            resolve({ url, type });
+                        };
+                    });
+                }));
+
+                const result = [];
+                const wides = items.filter(i => i.type === 'wide');
+                const normals = items.filter(i => i.type !== 'wide');
+
+                while (wides.length > 0 || normals.length > 0) {
+                    let rowSpace = 6;
+                    while (rowSpace > 0) {
+                        if (rowSpace >= 2 && wides.length > 0) {
+                            result.push(wides.shift());
+                            rowSpace -= 2;
+                        } else if (rowSpace >= 1 && normals.length > 0) {
+                            result.push(normals.shift());
+                            rowSpace -= 1;
+                        } else { break; }
+                    }
+                }
+
+                result.forEach(item => {
+                    const unit = document.createElement('div');
+                    unit.className = `bento-unit ${item.type}`;
+                    if (item.ytId) {
+                        unit.innerHTML = `<img src="https://img.youtube.com/vi/${item.ytId}/hqdefault.jpg"><div class="video-overlay"><div class="play-icon"></div></div>`;
+                        unit.onclick = () => openLightbox(item.url, item.ytId);
+                    } else {
+                        unit.innerHTML = `<img src="${item.url}">`;
+                        unit.onclick = () => openLightbox(item.url);
+                    }
+                    bentoArea.appendChild(unit);
+                });
+            }
+        });
+
+        function openLightbox(url, ytId = null) {
+            currentVideoId = ytId;
+            const targetImg = document.getElementById('target-img');
+            const playBtn = document.getElementById('lightbox-play-btn');
+            
+            if (ytId) {
+                targetImg.src = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                playBtn.style.display = 'flex';
+            } else {
+                targetImg.src = url;
+                playBtn.style.display = 'none';
+            }
+            document.getElementById('lightbox-ui').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function handleLightboxClick(event) {
+            event.stopPropagation();
+            if (currentVideoId) {
+                window.open(`https://www.youtube.com/watch?v=${currentVideoId}`, '_blank');
+            }
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-ui').classList.remove('active');
+            document.body.style.overflow = '';
+            currentVideoId = null;
         }
     </script>
 </body>

@@ -1,121 +1,457 @@
-/* 초기화 */
+/* ========================================= */
+/* 1. 기본 설정 및 폰트 (Base & Fonts) */
+/* ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* 폰트 설정 */
-.en { font-family: 'Avenir', 'Nunito Sans', sans-serif; display: none; }
-.ko { font-family: 'Nanum Gothic', sans-serif; }
-body { font-family: 'Avenir', 'Nunito Sans', 'Nanum Gothic', sans-serif; color: #333; line-height: 1.6; }
+/* 폰트: 나눔스퀘어 적용 */
+/* [수정] 영문 폰트를 Mulish로 변경 */
+.en { 
+    font-family: 'Mulish', sans-serif; 
+    display: inline-block; 
+}
+
+body { 
+    font-family: 'Mulish', 'NanumSquare', sans-serif; 
+    color: #333; 
+    background-color: #ffffff;
+    line-height: 1.6; 
+    overflow-x: hidden; 
+}
+.ko { font-family: 'NanumSquare', sans-serif; display: none; } 
+
+/* 언어 전환 로직 */
+body.kor-mode .en { display: none; }
+body.kor-mode .ko { display: inline-block; }
+body.kor-mode h1 .ko, body.kor-mode h2 .ko, 
+body.kor-mode p .ko, body.kor-mode div .ko, 
+body.kor-mode span .ko, body.kor-mode li .ko { display: block; }
+body.kor-mode span.ko { display: inline; }
+
 a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
 
-/* 언어 표시 로직 */
-body.eng-mode .ko { display: none; }
-body.eng-mode .en { display: inline-block; }
-body.eng-mode h1 .en, body.eng-mode h2 .en, body.eng-mode p .en, body.eng-mode div .en, body.eng-mode h3 .en { display: block; }
 
-/* 헤더 */
-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; position: fixed; width: 100%; top: 0; background: rgba(255, 255, 255, 0.95); z-index: 1000; border-bottom: 1px solid #eee; }
-.logo { font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+/* ========================================= */
+/* 2. 헤더 및 네비게이션 (Header & Nav) */
+/* ========================================= */
+header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 15px 50px; 
+    position: fixed; width: 100%; top: 0; 
+    background: rgba(255, 255, 255, 0.95); 
+    z-index: 1000; 
+    border-bottom: 1px solid #eee; 
+}
 
-/* --- [수정] 메뉴 버튼 폰트 축소 (14px) --- */
+.logo a { display: block; height: 50px; }
+.logo img { height: 80%; width: auto; display: block; }
+
 #menu-btn { 
     position: absolute; left: 50%; transform: translateX(-50%); 
     background: none; border: none; cursor: pointer; 
-    font-family: 'Avenir', 'Nunito Sans', 'Nanum Gothic', sans-serif; 
-    
-    font-size: 14px; /* 기존 18~24px 대비 약 75% 수준 */
-    font-weight: 500; 
-    
-    color: #333; letter-spacing: 0.5px; transition: opacity 0.3s; 
+    font-size: 18px; font-weight: 500; 
+    color: #333; letter-spacing: 0.5px; 
+    transition: opacity 0.3s; 
 }
 #menu-btn:hover { opacity: 0.6; }
 
 .right-control { display: flex; align-items: center; }
-#lang-btn { border: 1px solid #ccc; background: none; padding: 4px 8px; cursor: pointer; font-size: 11px; font-weight: bold; transition: 0.3s; }
-#lang-btn:hover { background: #333; color: white; border-color: #333; }
+#header-lang-btn { 
+    border: 1px solid #ccc; background: none; 
+    padding: 4px 8px; cursor: pointer; 
+    font-size: 11px; font-weight: bold; 
+    transition: 0.3s; 
+    min-width: 40px; text-align: center;
+}
+#header-lang-btn:hover { background: #333; color: white; border-color: #333; }
 
-/* 팝업 메뉴 */
-.menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(255, 255, 255, 0.98); z-index: 2000; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 150px; opacity: 0; visibility: hidden; transform: translateY(-20px); transition: all 0.4s ease-in-out; }
-.menu-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
-.menu-overlay nav ul { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 20px; }
+/* 메뉴 팝업 */
+.menu-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+    background: rgba(255, 255, 255, 0.98); 
+    z-index: 2000; 
+    display: flex; flex-direction: column; 
+    justify-content: flex-start; align-items: center; 
+    padding-top: 150px; 
+    opacity: 0; visibility: hidden; 
+    transform: translateY(-20px); 
+    transition: all 0.4s ease-in-out; 
+    pointer-events: none; 
+}
+.menu-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
 
-/* --- [수정] 메뉴 리스트 폰트 축소 (14px) --- */
+.menu-overlay nav ul { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 25px; } 
 .menu-overlay nav a { 
-    font-size: 14px; /* 기존 18px -> 14px (약 75%) */
-    font-weight: 400; color: #444; 
-    letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; 
+    font-size: 21px; font-weight: 400; color: #444; 
+    letter-spacing: 2px; text-transform: uppercase; 
+    transition: color 0.3s; 
 }
 .menu-overlay nav a:hover { color: #000; font-weight: 600; }
 
-/* --- [수정] 닫기 버튼 폰트 축소 (14px) --- */
 .close-btn { 
-    position: absolute; top: 25px; left: 50%; transform: translateX(-50%); 
-    font-family: 'Avenir', 'Nunito Sans', 'Nanum Gothic', sans-serif; 
-    
-    font-size: 14px; /* 통일감 있게 축소 */
-    
-    border: none; background: none; cursor: pointer; color: #333; 
-    letter-spacing: 0.5px; 
+    margin-bottom: 40px; border: none; background: none; cursor: pointer; 
+    font-size: 21px; color: #333; letter-spacing: 0.5px; 
 }
 .close-btn:hover { opacity: 0.6; }
 
-#search-input { margin-top: 50px; width: 200px; background: transparent; border: none; border-bottom: 2px solid #333; padding: 5px; text-align: center; font-family: 'Avenir', 'Nunito Sans', 'Nanum Gothic', sans-serif; font-size: 12px; color: #333; outline: none; border-radius: 0; }
+/* 메뉴 검색창 */
+#search-input { 
+    margin-top: 40px; 
+    width: 300px; 
+    background: transparent; 
+    border: none; 
+    border-bottom: 1px solid #333; 
+    padding: 10px; 
+    text-align: center; 
+    font-family: inherit; 
+    font-size: 16px; 
+    color: #333; 
+    outline: none; 
+    border-radius: 0; 
+}
 #search-input::placeholder { color: #aaa; }
 
+/* 검색 결과 컨테이너 */
+#menu-search-results {
+    width: 300px; max-height: 300px; overflow-y: auto;
+    margin-top: 20px; text-align: left;
+    -ms-overflow-style: none; scrollbar-width: none; 
+}
+#menu-search-results::-webkit-scrollbar { display: none; }
 
-/* --- [수정] 슬라이드 쇼 스타일 (45% 너비) --- */
-.hero-swiper-container {
-    width: 100%; height: 100vh;
-    display: flex; justify-content: center; align-items: center;
-    background: #f4f4f4; overflow: hidden;
+.menu-result-item {
+    display: block; padding: 12px 0; border-bottom: 1px solid #eee;
+    transition: opacity 0.3s; cursor: pointer;
+}
+.menu-result-item:hover { opacity: 0.6; }
+.menu-result-title { font-size: 16px; font-weight: 500; color: #000; margin-bottom: 4px; display: block; }
+.menu-result-sub { font-size: 13px; color: #888; display: block; }
+
+
+/* ========================================= */
+/* 3. 메인 (Index) - PC 버전 스타일 */
+/* ========================================= */
+.hero-swiper-container { 
+    width: 100%; min-height: 100vh; 
+    display: flex; flex-direction: column; 
+    justify-content: flex-start; align-items: center; 
+    background: #fff; overflow: hidden; 
+    padding-top: 120px; 
 }
 
-.swiper {
-    width: 100%;
-    padding-top: 40px; padding-bottom: 40px;
+.selected-project-title {
+    width: 100%; padding-left: 50px; margin-bottom: 50px; 
+    text-align: left; font-size: 50px; font-weight: 200; 
+    color: #000; line-height: 1.3; z-index: 10;
+}
+.selected-project-title .ko { font-weight: 200; }
+
+/* [Main Swiper] Coverflow Style */
+.mainSwiper { width: 100%; padding-top: 0; padding-bottom: 10px; }
+.mainSwiper .swiper-slide { 
+    background-position: center; background-size: cover; 
+    width: 65vw !important; aspect-ratio: 4 / 3; height: auto; 
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    opacity: 0.2; transition: all 1s ease; 
+}
+.mainSwiper .swiper-slide-active { 
+    z-index: 10; opacity: 1; transform: scale(1); 
 }
 
-/* [중요] 슬라이드 너비 45% 강제 적용 */
-.swiper-slide {
-    background-position: center; background-size: cover;
-    
-    width: 45vw !important; /* PC 화면 기준 45% */
-    
-    aspect-ratio: 4 / 3;
-    height: auto;
-    display: flex; flex-direction: column; align-items: center;
-    opacity: 0.5; transition: all 0.3s ease;
+.mainSwiper .img-box { 
+    width: 100%; height: 85%; overflow: hidden; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: block;
+}
+.mainSwiper img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* [News Swiper] Flat Style */
+.newsSwiper { width: 100%; padding-left: 50px; padding-right: 50px; }
+.newsSwiper .swiper-slide { width: auto !important; opacity: 1; }
+.newsSwiper .img-box { width: 300px; height: 150px; overflow: hidden; display: block; }
+.newsSwiper img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 공통 텍스트 */
+.slide-text { width: 100%; height: 15%; text-align: center; margin-top: 15px; }
+.slide-title { font-size: 20px; color: #000; font-weight: 500; margin-bottom: 4px; line-height: 1.2; }
+.slide-subtitle { font-size: 16px; color: #686868; font-weight: 200; letter-spacing: 1px;  }
+
+.latest-news-title {
+    width: 100%; padding-left: 50px; margin-top: 80px; margin-bottom: 20px;
+    font-size: 14px; font-weight: 400; color: #000; text-transform: uppercase; letter-spacing: 1px;
 }
 
-/* 모바일에서는 조금 더 크게 (70%) */
+
+/* ========================================= */
+/* 4. 프로젝트/뉴스 페이지 (Grid & List) */
+/* ========================================= */
+.projects-container { 
+    padding-top: 120px; padding-bottom: 100px; padding-left: 0; padding-right: 0;
+    max-width: 100%; margin: 0 auto; 
+}
+.news-width-limit { width: 75%; margin: 0 auto; padding-left: 0; padding-right: 0; }
+
+.projects-controls { 
+    padding: 0 50px 20px 50px; display: flex; justify-content: space-between; align-items: center; 
+    margin-bottom: 60px; border-bottom: 1px solid #eee; 
+}
+.view-toggles { display: flex; gap: 20px; }
+.view-btn { 
+    background: none; border: none; cursor: pointer; 
+    font-size: 14px; font-weight: 500; color: #999; font-family: inherit; transition: color 0.3s; 
+}
+.view-btn.active { color: #000; font-weight: 500; border-bottom: 2px solid #000; }
+
+.project-search { position: relative; }
+#p-search-input, #n-search-input { 
+    border: none; border-bottom: 1px solid #ccc; 
+    padding: 5px 25px 5px 5px; font-size: 14px; width: 200px; 
+    outline: none; font-family: inherit; 
+}
+
+
+/* [GRID VIEW] */
+.project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 4px; }
+.grid-item { margin-bottom: 20px; cursor: pointer; }
+.grid-item img { 
+    width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; margin-bottom: 10px; 
+    filter: grayscale(100%); transition: filter 0.3s, transform 0.5s; 
+}
+.grid-item:hover img { filter: grayscale(0%); transform: scale(1.05); }
+
+.grid-info { text-align: left; }
+.grid-title { font-size: 18px; font-weight: 700; color: #000; margin-bottom: 1px; line-height: 1.1; }
+.grid-sub { font-size: 14px; color: #000; font-weight: 200; line-height: 1.2; } 
+.grid-meta-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 5px; border-top: 1px solid #eee; 
+    padding-top: 2px; padding-right: 20px; 
+}
+
+
+/* [LIST VIEW] */
+.project-list { display: flex; flex-direction: column; gap: 0; }
+.list-item {
+    display: grid; grid-template-columns: 1.5fr 2fr 0.8fr 0.5fr 1fr; 
+    gap: 20px; padding: 12px 10px; align-items: center; position: relative;
+    cursor: pointer; transition: background 0.3s, transform 0.3s; text-align: left;
+}
+.list-item:hover { background: #fff; transform: translateX(10px); }
+.list-item::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: #ccc;
+}
+
+
+/* 5. PC vs Mobile 화면 분기 로직 */
+/* ========================================= */
+.mobile-only { display: none !important; }
+.desktop-only { display: flex !important; flex-direction: column; }
+
 @media (max-width: 768px) {
-    .swiper-slide { width: 70vw !important; }
+    .desktop-only { display: none !important; }
+    .mobile-only { display: block !important; }
+    header { padding: 10px 20px; }
+    .project-grid { grid-template-columns: 1fr; } 
+    .projects-container { padding: 100px 0; }
+    .news-width-limit { width: 100%; padding: 0 20px; }
+    
+    /* === INSERT THE NEW SCRIPT HERE === */
 }
 
-.swiper-slide-active { 
-    opacity: 1; 
-    z-index: 10;
+/* Selected 타이틀 및 컨테이너 위치 정의 */
+    .mobile-project-container {
+        padding-top: 100px; /* 고정 헤더에 가려지지 않도록 상단 여백 추가 */
+        width: 100%;
+    }
+    .mobile-title {
+        padding-left: 20px; /* 왼쪽 여백 */
+        margin-bottom: 30px; /* 아래 프로젝트 리스트와의 간격 */
+        font-size: 28px; /* 모바일 적정 글자 크기 */
+        font-weight: 200;
+    }
+
+    /* 2. Mobile Project List (The #home-mobile list in index.html) */
+    .mobile-project-item {
+        width: 100%;
+        margin-bottom: 50px;
+        padding: 0 20px;
+    }
+    .mobile-project-item img {
+        width: 100% !important; /* Ensures the images fill the container width */
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+    .mobile-title {
+        padding-left: 20px;
+        margin-bottom: 30px;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+
+
+/* ========================================= */
+/* 6. [수정됨] 푸터 섹션 (Footer Section) */
+/* ========================================= */
+.footer-section { 
+    background: #fff; /* 배경색을 밝은 톤으로 변경하여 건축적 느낌 강화 */
+    color: #333; 
+    padding: 80px 50px; 
+    text-align: left; 
+    border-top: 1px solid #eee;
 }
 
-.swiper-slide .img-box {
-    width: 100%; height: 85%;
-    overflow: hidden; 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-}
-.swiper-slide img {
-    display: block; width: 100%; height: 100%; object-fit: cover;
-}
-
-.slide-text {
-    width: 100%; height: 15%;
-    text-align: center; margin-top: 15px;
-}
-.slide-title {
-    font-size: 16px; color: #000; font-weight: 700;
-    margin-bottom: 4px; line-height: 1.2;
-}
-.slide-subtitle {
-    font-size: 11px; color: #999; font-weight: 400;
-    letter-spacing: 1px; text-transform: uppercase;
+/* 두 사무소 정보를 담는 컨테이너 */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 100%;
+    margin-bottom: 60px;
 }
 
-.footer-section { background: #222; color: #fff; padding: 80px 50px; text-align: center; }
+/* 개별 사무소 정보 컬럼 */
+.footer-office-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.footer-office-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+}
+
+.footer-office-info p {
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.footer-office-info a:hover {
+    text-decoration: underline;
+}
+
+/* 공통 정보 하단 영역 (이메일, 인스타그램, 카피라이트) */
+.footer-common {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+}
+
+.footer-contact-links p {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.instagram-link {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+    transition: opacity 0.3s;
+}
+.instagram-link:hover { opacity: 0.6; }
+
+.copyright {
+    font-size: 11px;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+/* 푸터 모바일 대응 */
+@media (max-width: 768px) {
+    .footer-section { padding: 60px 20px; }
+    .footer-container { flex-direction: column; gap: 40px; margin-bottom: 40px; }
+    .footer-common { flex-direction: column; align-items: flex-start; gap: 30px; }
+}
+
+
+/* ========================================= */
+/* 7. 애니메이션 및 기타 */
+/* ========================================= */
+.img-box img, .grid-item img, .swiper-slide img { transition: transform 0.5s ease; }
+.img-box:hover img, .grid-item:hover img { transform: scale(1.05); }
+button { transition: all 0.3s ease; }
+
+
+/* ========================================= */
+/* 8. Design Principles 섹션 스타일 */
+/* ========================================= */
+.design-principles-section {
+    width: 100%; margin-top: 20px; margin-bottom: 50px; 
+    display: flex; justify-content: flex-start; align-items: flex-start;
+}
+.dp-title-col { width: 50%; padding-left: 50px; }
+.dp-title {
+    font-size: 14px; font-weight: 400; color: #000; 
+    text-transform: uppercase; letter-spacing: 1px;
+    padding-top: 18px; 
+}
+.dp-list-col { width: 70%; display: flex; flex-direction: column; padding-right: 50px; }
+.dp-item {
+    display: block; width: 100%; font-size: 40px; color: #000; font-weight: 400; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5); padding: 15px 0; transition: color 0.3s ease;
+}
+.dp-item:hover { color: #b3b3b3; }
+
+@media (max-width: 768px) {
+    .design-principles-section { flex-direction: column; }
+    .dp-title-col, .dp-list-col { width: 100%; padding-left: 20px; padding-right: 20px; }
+    .dp-item { font-size: 24px; }
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 비율 */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 15px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.insta-link {
+    font-size: 13px;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.insta-link:hover { color: #000; }
+
