@@ -204,25 +204,42 @@
                     </div>
                 `;
 
-                // 이미지 팝업 인터랙션
-                item.addEventListener('mouseenter', () => {
-                    popupImg.src = a.image;
-                    popup.style.display = 'block';
-                });
+            // 이미지 팝업 인터랙션 (데이터 부재 및 로딩 실패 방어 적용)
+            item.addEventListener('mouseenter', () => {
+                // data.js의 awardedData 내 image 필드 참조
+                const imgPath = a.image || ""; 
 
-                item.addEventListener('mousemove', (e) => {
-                    popup.style.left = (e.clientX + 30) + 'px';
-                    popup.style.top = (e.clientY + 20) + 'px';
-                    if (e.clientX + 430 > window.innerWidth) {
-                        popup.style.left = (e.clientX - 430) + 'px';
-                    }
-                });
-
-                item.addEventListener('mouseleave', () => {
+                if (imgPath && imgPath !== "") {
+                    // 이미지가 실제로 존재하고 성공적으로 로드되었을 때만 팝업 표시
+                    popupImg.onload = () => {
+                        popup.style.display = 'block';
+                    };
+                    // 404 에러 등 이미지 파일을 불러올 수 없는 경우 팝업을 숨김
+                    popupImg.onerror = () => {
+                        popup.style.display = 'none';
+                    };
+                    popupImg.src = imgPath;
+                } else {
+                    // 데이터가 빈 문자("")열인 경우 즉시 숨김 처리
                     popup.style.display = 'none';
-                    popupImg.src = "";
-                });
+                }
+            });
 
+            item.addEventListener('mousemove', (e) => {
+                // 오프셋 값을 20px로 통일하여 시각적 일관성 유지
+                popup.style.left = (e.clientX + 20) + 'px';
+                popup.style.top = (e.clientY + 20) + 'px';
+
+                // 화면 우측 경계 처리 (팝업 너비 400px + 여백 고려)
+                if (e.clientX + 420 > window.innerWidth) {
+                    popup.style.left = (e.clientX - 420) + 'px';
+                }
+            });
+
+            item.addEventListener('mouseleave', () => {
+                popup.style.display = 'none';
+                popupImg.src = "";
+            });
                 container.appendChild(item);
             });
         };

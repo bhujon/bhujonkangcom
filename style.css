@@ -249,6 +249,9 @@ header {
 @media (max-width: 768px) {
     .desktop-only { display: none !important; }
     .mobile-only { display: block !important; }
+    /* 핸드폰 모드에서 프로젝트 검색창 제거 */
+    .project-search { display: none !important; }
+    .list-header, .list-item { font-size: 70% !important; gap: 8px !important; }
     header { padding: 10px 20px; }
     .project-grid { grid-template-columns: 1fr; } 
     .projects-container { padding: 100px 0; }
@@ -274,6 +277,7 @@ header {
         width: 100%;
         margin-bottom: 50px;
         padding: 0 20px;
+        font-size: 12px;
     }
     .mobile-project-item img {
         width: 100% !important; /* Ensures the images fill the container width */

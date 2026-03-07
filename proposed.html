@@ -183,11 +183,23 @@
                     </div>
                 `;
 
-                // [수정] 변수명을 p.image로 통일하여 참조 에러 해결
+                // [통합] 이미지 유효성 검사 및 로딩 처리
                 item.addEventListener('mouseenter', () => {
-                    if (p.image && p.image !== "") {
-                        popupImg.src = p.image;
-                        popup.style.display = 'block';
+                    // p.images[0] 혹은 p.image 중 존재하는 값을 선택
+                    const imgPath = (p.images && p.images[0]) ? p.images[0] : (p.image || "");
+
+                    if (imgPath && imgPath !== "" && !imgPath.includes('youtube.com')) {
+                        // 이미지가 성공적으로 로드되었을 때만 팝업 표시
+                        popupImg.onload = () => {
+                            popup.style.display = 'block';
+                        };
+                        // 이미지 경로가 잘못되었거나 로딩 실패(404) 시 팝업 숨김
+                        popupImg.onerror = () => {
+                            popup.style.display = 'none';
+                        };
+                        popupImg.src = imgPath;
+                    } else {
+                        popup.style.display = 'none';
                     }
                 });
 

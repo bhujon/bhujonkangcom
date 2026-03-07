@@ -833,63 +833,63 @@ const ArchiveData = {
         "year": "2025",
         "client": { "ko": "부산광역시 동래구", "en": "DongRae-Gu, Busan" },
         "program": { "ko": "운동시설", "en": "Sports Facility" },
-        "image": "archive/36.webp"
+        "image": "proposed/36.webp"
     },
     "35": {
         "title": { "ko": "창원대 아레나플렉스", "en": "Arena Flex at CNU" },
         "year": "2025",
         "client": { "ko": "창원대학교", "en": "Chang-won University" },
         "program": { "ko": "운동시설", "en": "Sports Facility" },
-        "image": "archive/35.webp"
+        "image": "proposed/35.webp"
     },
     "34": {
         "title": { "ko": "에코3고등학교 신축공사", "en": "Eco-3rd High School" },
         "year": "2025",
         "client": { "ko": "부산광역시 교육청", "en": "Busan Office of Education" },
         "program": { "ko": "교육연구시설(고등학교)", "en": "Education Facility" },
-        "image": "archive/34.webp"
+        "image": "proposed/34.webp"
     },
     "33": {
         "title": { "ko": "신발특화지식산업센터", "en": "Footwear-Specialized Knowledge Industry Center" },
         "year": "2025",
         "client": { "ko": "부산광역시", "en": "Busan Metropolitan Office" },
         "program": { "ko": "지식산업센터", "en": "Knowledge Industry Center" },
-        "image": "archive/33.webp"
+        "image": "proposed/33.webp"
     },
     "32": {
         "title": { "ko": "서구 의료 R&D 지식산업센터", "en": "Seo-gu Medical R&D Knowledge Industry Center" },
         "year": "2025",
         "client": { "ko": "부산광역시 서구", "en": "Gijang-Gun, Busan" },
         "program": { "ko": "지식산업센터", "en": "Knowledge Industry Center" },
-        "image": "archive/32.webp"
+        "image": "proposed/32.webp"
     },
     "31": {
         "title": { "ko": "호계면 기초생활거점조성사업", "en": "Hogye-myeon Basic Living Sphere Development Project" },
         "year": "2025",
         "client": { "ko": "경상북도 문경시", "en": "MunGyeong-Si, GyeongSangBuk-Do" },
         "program": { "ko": "공공업무시설", "en": "Public Office" },
-        "image": "archive/31.webp"
+        "image": "proposed/31.webp"
     },
     "30": {
         "title": { "ko": "기장군 도시관리공단 본부 신축공사", "en": "H/Q for Urban Management Corporation Gijang-Gun" },
         "year": "2025",
         "client": { "ko": "부산광역시 기장군", "en": "Gijang-Gun, Busan" },
         "program": { "ko": "공공업무시설", "en": "Public Office" },
-        "image": "archive/30.webp"
+        "image": "proposed/30.webp"
     },
     "29": {
         "title": { "ko": "북구 신청사 건립공사", "en": "Buk-gu New District Office" },
         "year": "2025",
         "client": { "ko": "부산광역시 북구", "en": "Buk-Gu, Busan" },
         "program": { "ko": "공공업무시설", "en": "Public Office" },
-        "image": "archive/29.webp"
+        "image": "proposed/29.webp"
     },
     "28": {
         "title": { "ko": "망미체육센터", "en": "Mangmi Sports Center" },
         "year": "2024",
         "client": { "ko": "부산광역시", "en": "Busan Metropolitan Office" },
         "program": { "ko": "운동시설", "en": "Sports Facility" },
-        "image": "archive/28.webp"
+        "image": "proposed/28.webp"
     },
     "27": {
         "title": { "ko": "연제구 청소년문화의 집", "en": "Yeonje-gu Youth Culture House" },
@@ -924,7 +924,7 @@ const ArchiveData = {
         "year": "2023",
         "client": { "ko": "제주특별자치도", "en": "Jeju-si, Jeju-do" },
         "program": { "ko": "업무시설", "en": "Office" },
-        "image": "archive/23.webp"
+        "image": "proposed/23.webp"
     },
 
     "22": {
@@ -932,28 +932,28 @@ const ArchiveData = {
         "year": "2023",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "업무시설", "en": "Office" },
-        "image": "archive/22.webp"
+        "image": "proposed/22.webp"
     },
     "21": {
         "title": { "ko": "50+ 복합지원센터", "en": "50+ Complex Support Center" },
         "year": "2023",
         "client": { "ko": "부산광역시", "en": "Busan Metropolitan Office" },
         "program": { "ko": "노유자시설", "en": "Social Welfare Facility" },
-        "image": "archive/21.webp"
+        "image": "proposed21.webp"
     },
     "20": {
         "title": { "ko": "상동면 기초생활거점 조성사업", "en": "Sangdong-myeon Basic Life Base Development" },
         "year": "2023",
         "client": { "ko": "경상남도 김해시", "en": "GimHae-Si, GyeongSangNam-Do" },
         "program": { "ko": "업무시설", "en": "Office" },
-        "image": "archive/20.webp"
+        "image": "proposed/20.webp"
     },
     "19": {
         "title": { "ko": "울산해상물류통합검증센터", "en": "Ulsan Maritime Logistics Integrated Verification Center" },
         "year": "2023",
         "client": { "ko": "울산광역시", "en": "Ulsan Metropolitan Office" },
         "program": { "ko": "업무시설", "en": "Office" },
-        "image": "archive/19.webp"
+        "image": "proposed/19.webp"
     },
     "18": {
         "title": { "ko": "에코델타 첨단지식산업센터", "en": "Eco Delta Advanced Knowledge Industry Center" },
@@ -967,7 +967,7 @@ const ArchiveData = {
         "year": "2022",
         "client": { "ko": "전라북도 전주시", "en": "JeonJu-Si, JeonRaBuk-Do" },
         "program": { "ko": "문화집회시설", "en": "Cultural Facility" },
-        "image": "archive/17.webp"
+        "image": "proposed/17.webp"
     },
     "16": {
         "title": { "ko": "서대문 도서관", "en": "Seodaemun Library" },
@@ -996,21 +996,21 @@ const ArchiveData = {
         "year": "2021",
         "client": { "ko": "부산광역시 기장군", "en": "GiJang-Gun, Busan" },
         "program": { "ko": "교육연구시설(도서관)", "en": "Educational (Library)" },
-        "image": "archive/12.webp"
+        "image": "proposed/12.webp"
     },
     "11": {
         "title": { "ko": "주례공공도서관", "en": "Jurye Public Library" },
         "year": "2020",
         "client": { "ko": "부산광역시", "en": "Busan Metropolitan Office" },
         "program": { "ko": "교육연구시설(도서관)", "en": "Educational (Library)" },
-        "image": "archive/11.webp"
+        "image": "proposed/11.webp"
     },
     "10": {
         "title": { "ko": "영주어울림가족센터", "en": "Yeongju Family Center" },
         "year": "2020",
         "client": { "ko": "경상북도 영주시", "en": "YoungJu-Si, GyeongSangBuk-Do" },
         "program": { "ko": "문화집회시설", "en": "Cultural Facility" },
-        "image": "archive/10.webp"
+        "image": "proposed/10.webp"
     },
 
     "8": {
@@ -1018,7 +1018,7 @@ const ArchiveData = {
         "year": "2019",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "문화집회시설", "en": "Cultural Facility" },
-        "image": "archive/8.webp"
+        "image": "proposed/8.webp"
     },
 
     "6": {
@@ -1026,34 +1026,34 @@ const ArchiveData = {
         "year": "2017",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "문화집회시설", "en": "Cultural Facility" },
-        "image": "archive/6.webp"
+        "image": "proposed/6.webp"
     },
     "5": {
         "title": { "ko": "여의나루 페리터미널 디자인", "en": "Yeouinaru Ferry Terminal Design" },
         "year": "2017",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "운수시설(항만시설)", "en": "Port Facility" },
-        "image": "archive/5.webp"
+        "image": "proposed/5.webp"
     },
     "4": {
         "title": { "ko": "제2동북 50+캠퍼스 복합시설", "en": "2nd Northeast 50+ Campus Complex" },
         "year": "2017",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "노유자시설/교육문화시설", "en": "Welfare & Educational" },
-        "image": "archive/4.webp"
+        "image": "proposed/4.webp"
     },
     "3": {
         "title": { "ko": "평창동 미술문화복합공간", "en": "Pyeongchang-dong Art & Culture Complex" },
         "year": "2017",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "교육문화시설", "en": "Educational & Cultural" },
-        "image": "archive/3.webp"
+        "image": "proposed/3.webp"
     },
     "2": {
         "title": { "ko": "시립중랑노인전문요양원 증축공사", "en": "Seoul Jungnang Nursing Home Extension" },
         "year": "2017",
         "client": { "ko": "서울특별시", "en": "Seoul Metropolitan Office" },
         "program": { "ko": "노유자시설", "en": "Social Welfare Facility" },
-        "image": "archive/2.webp"
+        "image": "proposed/2.webp"
     }
 };
